@@ -4,5 +4,5 @@ set -e
 
 APPNAME="ecommerceappcurso"
 
-cd ../
+cd ../src
 func azure functionapp publish $APPNAME
