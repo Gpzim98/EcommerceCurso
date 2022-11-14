@@ -1,0 +1,1 @@
+az ad sp create-for-rbac --name "ecommerceappcurso-sp" --sdk-auth --role contributor --scopes /subscriptions/<SUBSCRIPTION-ID>/resourcegroups/ecommerce/providers/Microsoft.Web/sites/   
