@@ -22,7 +22,7 @@ namespace MyEcommerce.Shipping
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions! - Shipping function");
+            response.WriteString("Welcome to Azure Functions! - Shipping function!");
 
             return response;
         }
