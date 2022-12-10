@@ -16,7 +16,7 @@ namespace Ecommerce.Products
         }
 
         [Function("Products")]
-        public ProductBindings Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "delete")] 
+        public ProductBindings Run([HttpTrigger(AuthorizationLevel.Anonymous,"post", "put", "delete")] 
         HttpRequestData req, ProductDTO product)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -26,7 +26,6 @@ namespace Ecommerce.Products
 
             response.WriteString("Welcome to Azure Functions!");
 
-            if(req.Method == "GET") {  }    // get
             if(req.Method == "POST") {   return Create(req, product); }
             if(req.Method == "PUT") {    return Update(req, product); }
             if(req.Method == "DELETE") { return Delete(req, product); } 
