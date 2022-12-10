@@ -6,23 +6,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Ecommerce.Products
 {
-    public class GetProductById
+    public class GetProductByCategory
     {
         private readonly ILogger _logger;
 
-        public GetProductById(ILoggerFactory loggerFactory)
+        public GetProductByCategory(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<GetProductById>();
+            _logger = loggerFactory.CreateLogger<GetProductByCategory>();
         }
 
-        [Function("Products/GetProductById")]
+        [Function("Products/GetProductByCategory")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req, 
         
         [CosmosDBInput(databaseName: "%DatabaseName%",
                        collectionName: "%ContainerName%",
                        ConnectionStringSetting = "CosmosDBConnectionString",
-                       Id ="{id}",
-                       PartitionKey ="{paritionKey}")] ProductDTO product
+                       SqlQuery = "SELECT * FROM c where c.Category = {category} and c.Deleted = false",
+                       PartitionKey ="{paritionKey}")] List<ProductDTO> products
         )
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -30,7 +30,7 @@ namespace Ecommerce.Products
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            var jsonString = JsonSerializer.Serialize(product);
+            var jsonString = JsonSerializer.Serialize(products);
 
             response.WriteString(jsonString);
 
