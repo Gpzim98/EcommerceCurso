@@ -27,15 +27,40 @@ namespace Ecommerce.Products
             response.WriteString("Welcome to Azure Functions!");
 
             if(req.Method == "GET") {  }    // get
-            if(req.Method == "POST") { return Create(req, product); }
-            if(req.Method == "PUT") {  return Update(req, product); }
-            if(req.Method == "DELETE") {  } // delete
+            if(req.Method == "POST") {   return Create(req, product); }
+            if(req.Method == "PUT") {    return Update(req, product); }
+            if(req.Method == "DELETE") { return Delete(req, product); } 
 
             return new ProductBindings
             {
                 HttpResponse = response,
             };
         }
+
+        private static ProductBindings Delete(HttpRequestData req, ProductDTO product)
+        {
+            var response = req.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
+
+            if (string.IsNullOrEmpty(product.Id))
+            {
+                response.WriteString("Product ID is required");
+                response.StatusCode = HttpStatusCode.BadRequest;
+                var resp = new ProductBindings { HttpResponse = response };
+                return resp;
+            }
+
+            product.SetAsDeleted();
+
+            response.WriteString($"Record {product.Id} delete");
+
+            return new ProductBindings
+            {
+                HttpResponse = response,
+                Product = product
+            };
+        }
+
 
         private static ProductBindings Update(HttpRequestData req, ProductDTO product)
         {
