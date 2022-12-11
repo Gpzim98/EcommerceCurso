@@ -169,6 +169,13 @@
         "properties": {
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
           "siteConfig": {
+            "connectionStrings": [
+              {
+                "name": "CosmosDbConnectionString",
+                "connectionString": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('accountName')), '2019-12-12').connectionStrings[0].connectionString]",
+                "type": 3
+              }
+            ],
             "appSettings": [
               {
                 "name": "AzureWebJobsDashboard",
@@ -201,6 +208,14 @@
               {
                 "name": "FUNCTIONS_WORKER_RUNTIME",
                 "value": "dotnet-isolated"
+              },
+              {
+                "name": "DatabaseName",
+                "value": "[parameters('databaseName')]"
+              },
+              {
+                "name": "ContainerName",
+                "value": "Products"
               }
             ]
           }
