@@ -3,10 +3,28 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "appName": {
-        "value": "zipdeploydemo2"
+            "value": "ecommerceappcurso"
         },
         "storageAccountName": {
-            "value": "storageaccountcoursegreg"
-        }
+            "value": "ecommerceaccurso"
+        },
+        "accountName": {
+            "value": "cosmosdbecommerce"
+          },
+          "databaseName": {
+            "value": "ecommercecomosdb"
+          },
+          "containers": {
+            "value": [
+              {
+                "name": "Products",
+                "partitionKey": "/Category"
+              },
+              {
+                "name": "Customers",
+                "partitionKey": "/Address/City"
+              }
+            ]
+          }
     }
 }
